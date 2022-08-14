@@ -1,6 +1,6 @@
 from modules.shared.endereco.dao import EnderecoDao
 
-_SCRIPT_SQL_INSERT = 'INSERT INTO CLIENTES(nome, cpf, telefone, email, data_nascimento, confiabilidade_id) values (%s, %s, %s, %s, %s, %s) returning id'
+_SCRIPT_SQL_INSERT = 'INSERT INTO CLIENTES(nome, cpf, telefone, email, data_nascimento, confiabilidade_id, empresa_id) values (%s, %s, %s, %s, %s, %s, %s) returning id'
 _SCRIPT_SQL_SELECT = 'select * from clientes'
 _SCRIPT_SQL_SELECT_BY_ID = 'SELECT * FROM CLIENTES where id={}'
 _SCRIPT_SQL_UPDATE_BY_ID = 'UPDATE CLIENTES SET {} WHERE ID={}'

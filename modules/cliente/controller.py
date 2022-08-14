@@ -5,8 +5,6 @@ from flask import Blueprint, request, make_response, jsonify
 from modules.cliente.dao import ClienteDao
 from modules.cliente.modelo import Cliente
 from modules.empresa.dao import EmpresaDao
-from modules.shared.clientes_empresas.dao import ClientesEmpresasDao
-from modules.shared.clientes_empresas.modelo import ClientesEmpresas
 from modules.shared.confiabilidade.dao import ConfiabilidadeDao
 from modules.shared.confiabilidade.modelo import Confiabilidade
 from modules.shared.endereco.dao import EnderecoDao
@@ -19,7 +17,6 @@ app_name = 'cliente'
 dao = ClienteDao(database=ConnectDB())
 dao_endereco = EnderecoDao(database=ConnectDB())
 dao_confiabilidade = ConfiabilidadeDao(database=ConnectDB())
-dao_clientes_empresas = ClientesEmpresasDao(database=ConnectDB())
 dao_empresa = EmpresaDao(database=ConnectDB())
 
 
@@ -31,22 +28,19 @@ def get_clientes():
 @app_cliente.route('/{}/add/'.format(app_name), methods=['POST'])
 def add_cliente():
     try:
-        data = request.args.to_dict(flat=True)
+        data = request.form.to_dict(flat=True)
 
         confiabilidade = Confiabilidade(0, 0, 1, 0)  # padrão de criação
         confiabilidade = dao_confiabilidade.save(confiabilidade)
         cliente = Cliente(nome=data.get('nome'),
-                          cpf=data.get('cpf'),
-                          telefone=data.get('telefone'),
-                          email=data.get('email'),
-                          data_nascimento=data.get('data_nascimento'), confiabilidade_id=confiabilidade.id)
+                        cpf=data.get('cpf'),
+                        telefone=data.get('telefone'),
+                        email=data.get('email'),
+                        data_nascimento=data.get('data_nascimento'),
+                        confiabilidade_id=confiabilidade.id,
+                        empresa_id=data.get('empresa_id'))
 
         cliente = dao.save(cliente)
-        if data.get('empresa'):
-            empresa = "'" + data.get('empresa') + "'"
-            empresa = dao_empresa.get_by_cnpj(cnpj=empresa)
-            cliente_empresa = ClientesEmpresas(empresa_id=empresa.get('id'),cliente_id=cliente.id)
-            dao_clientes_empresas.save(cliente_empresa)
 
         if(data.get('logradouro')):
             endereco = Endereco(data.get('tipo_logradouro'), data.get('logradouro'), data.get('numero'), data.get('bairro'), data.get('cidade'), data.get('cep'), data.get('estado'))
@@ -65,7 +59,7 @@ def add_cliente():
 @app_cliente.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])
 def edit_cliente(id):
-    data = request.args.to_dict(flat=True)
+    data = request.form.to_dict(flat=True)
     cliente = dao.get_by_id(id)
     if not cliente:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)

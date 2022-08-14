@@ -18,7 +18,7 @@ def get_localizacoes():
 @app_localizacao.route('/{}/add/'.format(app_name), methods=['POST'])
 def add_localizacao():
     try:
-        data = request.args.to_dict(flat=True)
+        data = request.form.to_dict(flat=True)
         localizacao = Localizacao(estante=data.get('estante'),
                                 prateleira=data.get('prateleira'))
         localizacao = dao.save(localizacao)
@@ -35,7 +35,7 @@ def add_localizacao():
 @app_localizacao.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])
 def edit_localizacao(id):
-    data = request.args.to_dict(flat=True)
+    data = request.form.to_dict(flat=True)
     localizacao = dao.get_by_id(id)
     if not localizacao:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)

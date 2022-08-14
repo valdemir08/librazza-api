@@ -19,7 +19,7 @@ def get_funcionarios():
 @app_funcionario.route('/{}/add/'.format(app_name), methods=['POST'])
 def add_funcionarios():
     try:
-        data = request.args.to_dict(flat=True)
+        data = request.form.to_dict(flat=True)
         funcionario = Funcionario(matricula=data.get('matricula'),
                                   senha=data.get('senha'),
                                   nome=data.get('nome'),
@@ -42,7 +42,7 @@ def add_funcionarios():
 @app_funcionario.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])
 def edit_funcionario(id):
-    data = request.args.to_dict(flat=True)
+    data = request.form.to_dict(flat=True)
     funcionario = dao.get_by_id(id)
     if not funcionario:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)

@@ -17,7 +17,7 @@ def get_emprestimos():
 @app_emprestimo.route('/{}/add/'.format(app_name), methods=['POST'])
 def add_emprestimo():
     try:
-        data = request.args.to_dict(flat=True)
+        data = request.form.to_dict(flat=True)
         emprestimo = Emprestimo(
                                 data_inicio=data.get('data_inicio'),
                                 prazo_devolucao=data.get('prazo_devolucao'),
@@ -40,7 +40,7 @@ def add_emprestimo():
 @app_emprestimo.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])
 def edit_emprestimo(id):
-    data = request.args.to_dict(flat=True)
+    data = request.form.to_dict(flat=True)
     emprestimo = dao.get_by_id(id)
     if not emprestimo:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)

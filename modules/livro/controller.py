@@ -26,7 +26,7 @@ def get_livros():
 @app_livro.route('/{}/add/'.format(app_name), methods=['POST'])
 def add_livro():
     try:
-        data = request.args.to_dict(flat=True)
+        data = request.form.to_dict(flat=True)
 
         livro = Livro(titulo=data.get('titulo'),
                                 edicao=data.get('edicao'),
@@ -69,7 +69,7 @@ def add_livro():
 @app_livro.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])
 def edit_livro(id):
-    data = request.args.to_dict(flat=True)
+    data = request.form.to_dict(flat=True)
     livro = dao.get_by_id(id)
     if not livro:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)

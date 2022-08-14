@@ -18,7 +18,7 @@ def get_empresas():
 @app_empresa.route('/{}/add/'.format(app_name), methods=['POST'])
 def add_empresa():
     try:
-        data = request.args.to_dict(flat=True)
+        data = request.form.to_dict(flat=True)
         util.validacoes.EmpresaUtil.validate(data)
         empresa = Empresa(nome=data.get('nome'),
                           cnpj=data.get('cnpj'))
@@ -36,7 +36,7 @@ def add_empresa():
 @app_empresa.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])
 def edit_empresa(id):
-    data = request.args.to_dict(flat=True)
+    data = request.form.to_dict(flat=True)
     empresa = dao.get_by_id(id)
     if not empresa:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)

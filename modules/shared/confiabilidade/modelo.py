@@ -1,9 +1,8 @@
 
 
 class Confiabilidade:
-    def __init__(self, pontos, selo, qtd_livros_permitidos, qtd_livros_emprestados, id=None):
+    def __init__(self, pontos, qtd_livros_permitidos, qtd_livros_emprestados, id=None):
         self.pontos = pontos
-        self.selo = selo
         self.qtd_livros_permitidos = qtd_livros_permitidos
         self.qtd_livros_emprestados = qtd_livros_emprestados
         self.id = id
@@ -12,10 +11,10 @@ class Confiabilidade:
         self.id = id
 
     def __str__(self):
-        return 'Pontos: {} - Selo: {} - Qtd Livros Permitidos: {} - Qtd Livros Emprestados: {}'.format(self.pontos, self.selo,self.qtd_livros_permitidos, self.qtd_livros_emprestados)
+        return 'Pontos: {} - Qtd Livros Permitidos: {} - Qtd Livros Emprestados: {}'.format(self.pontos, self.qtd_livros_permitidos, self.qtd_livros_emprestados)
 
     def get_values_save(self):
-        return [self.pontos, self.selo, self.qtd_livros_permitidos, self.qtd_livros_emprestados]
+        return [self.pontos, self.qtd_livros_permitidos, self.qtd_livros_emprestados]
 
 
 

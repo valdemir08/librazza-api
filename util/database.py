@@ -6,7 +6,7 @@ class ConnectDB:
 
         self._connect = psycopg2.connect(
             host="localhost",
-            database="librazza_db",
+            database="librazza-producao",
             user="postgres",
             password="postgres"
         )

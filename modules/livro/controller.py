@@ -28,6 +28,8 @@ def add_livro():
     try:
         data = request.form.to_dict(flat=True)
 
+        
+
         livro = Livro(titulo=data.get('titulo'),
                                 edicao=data.get('edicao'),
                                 editora=data.get('editora'),
@@ -37,7 +39,13 @@ def add_livro():
                                 genero=data.get('genero'),
                                 disponivel=data.get('disponivel'),
                                 empresa_id=data.get('empresa_id'),
-                                isbn = data.get('isbn'))
+                                isbn = data.get('isbn'), localizacao_id=localizacao_id)
+
+        if data.get('estante' and 'prateleira'):
+            localizacao = Localizacao(estante=data.get('estante'), prateleira=data.get('prateleira'))
+            localizacao = dao_localizacao.save(localizacao)
+            livro.set_localizacao_id(localizacao.id)
+            
         livro = dao.save(livro)
 
 
@@ -47,11 +55,8 @@ def add_livro():
             autor_livro = AutoresLivros(autor.get('id'), livro.id)
             dao_autores_livros.save(autor_livro)
 
-        if data.get('estante' and 'prateleira'):
-            localizacao = Localizacao(estante=data.get('estante'), prateleira=data.get('prateleira'))
-            localizacao = dao_localizacao.save(localizacao, livro.id)
-            livro.set_localizacao(localizacao)
-            print(localizacao)
+        
+            
 
 
 

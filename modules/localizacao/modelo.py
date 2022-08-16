@@ -11,8 +11,8 @@ class Localizacao:
     def __str__(self):
         return 'Nome: {} - CPF: {}'.format(self.estante, self.prateleira)
 
-    def get_values_save(self, livro_id):
-        return [self.estante, self.prateleira, livro_id]
+    def get_values_save(self):
+        return [self.estante, self.prateleira]
 
 
 

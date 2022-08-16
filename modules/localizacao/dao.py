@@ -1,5 +1,5 @@
 
-_SCRIPT_SQL_INSERT = 'INSERT INTO LOCALIZACOES(estante, prateleira, livro_id) values (%s, %s, %s) returning id'
+_SCRIPT_SQL_INSERT = 'INSERT INTO LOCALIZACOES(estante, prateleira) values (%s, %s) returning id'
 _SCRIPT_SQL_SELECT = 'SELECT * FROM LOCALIZACOES'
 _SCRIPT_SQL_SELECT_BY_ID = 'SELECT * FROM LOCALIZACOES where id={}'
 _SCRIPT_SQL_UPDATE_BY_ID = 'UPDATE LOCALIZACOES SET {} WHERE ID={}'
@@ -8,9 +8,9 @@ class LocalizacaoDao:
     def __init__(self, database):
         self.database = database
 
-    def save(self, localizacao, livro_id):
+    def save(self, localizacao,):
         cursor = self.database.connect.cursor()
-        cursor.execute(_SCRIPT_SQL_INSERT, localizacao.get_values_save(livro_id))
+        cursor.execute(_SCRIPT_SQL_INSERT, localizacao.get_values_save())
         id = cursor.fetchone()[0]
         self.database.connect.commit()
         cursor.close()

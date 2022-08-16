@@ -1,6 +1,6 @@
-from modules.shared.selo.dao import SeloDao
 
-_SCRIPT_SQL_INSERT = 'INSERT INTO CONFIABILIDADES (pontos, selo, qtd_livros_permitidos, qtd_livros_emprestados) VALUES (%s, %s, %s, %s) returning id'
+
+_SCRIPT_SQL_INSERT = 'INSERT INTO CONFIABILIDADES (pontos, qtd_livros_permitidos, qtd_livros_emprestados) VALUES (%s, %s, %s) returning id'
 _SCRIPT_SQL_SELECT_ALL = 'SELECT * FROM CONFIABILIDADES'
 _SCRIPT_SQL_SELECT_BY_CLIENTE_ID = 'SELECT * FROM CONFIABILIDADES where cliente_id={}'
 _SCRIPT_SQL_SELECT = 'SELECT * FROM CONFIABILIDADES'
@@ -10,7 +10,6 @@ _SCRIPT_SQL_SELECT_BY_ID = 'SELECT * FROM CONFIABILIDADES where id={}'
 class ConfiabilidadeDao:
     def __init__(self, database):
         self.database = database
-        self.dao_selo = SeloDao(database=database)
 
     def save(self, confiabilidade):
         cursor = self.database.connect.cursor()
@@ -50,10 +49,6 @@ class ConfiabilidadeDao:
         while confiabilidade_cursor:
             confiabilidade = dict(zip(columns_name, confiabilidade_cursor))
             confiabilidade_cursor = cursor.fetchone()
-            selo = self.dao_selo.get_selo_by_confiabilidade_id(confiabilidade.get('id'))
-            if selo:
-                selo.pop('confiabilidade_id')
-            confiabilidade['selo'] = selo
             confiabilidades.append(confiabilidade)
         cursor.close()
         return confiabilidades

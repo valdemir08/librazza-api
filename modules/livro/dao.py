@@ -1,5 +1,5 @@
 
-_SCRIPT_SQL_INSERT = 'INSERT INTO LIVROS(titulo, edicao, editora, ano_publicacao, num_paginas, cod_barras, genero, disponivel, empresa_id, isbn) values (%s, %s, %s, %s,%s, %s, %s, %s, %s, %s) returning id'
+_SCRIPT_SQL_INSERT = 'INSERT INTO LIVROS(titulo, edicao, editora, ano_publicacao, num_paginas, cod_barras, genero, disponivel, empresa_id, isbn, localizacao_id) values (%s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s) returning id'
 _SCRIPT_SQL_SELECT = 'SELECT * FROM LIVROS'
 _SCRIPT_SQL_SELECT_BY_ID = 'SELECT * FROM LIVROS where id={}'
 _SCRIPT_SQL_UPDATE_BY_ID = 'UPDATE LIVROS SET {} WHERE ID={}'

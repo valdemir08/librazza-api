@@ -30,7 +30,7 @@ def add_cliente():
     try:
         data = request.form.to_dict(flat=True)
 
-        confiabilidade = Confiabilidade(0, 0, 1, 0)  # padrão de criação
+        confiabilidade = Confiabilidade(0, 1, 0)  # padrão de criação
         confiabilidade = dao_confiabilidade.save(confiabilidade)
         cliente = Cliente(nome=data.get('nome'),
                         cpf=data.get('cpf'),

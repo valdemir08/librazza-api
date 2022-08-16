@@ -18,7 +18,7 @@ def get_autores():
 @app_autor.route('/{}/add/'.format(app_name), methods=['POST'])
 def add_autor():
     try:
-        data = request.args.to_dict(flat=True)
+        data = request.form.to_dict(flat=True)
         autor = Autor(nome=data.get('nome'))
         autor = dao.save(autor)
     except Exception as e:
@@ -34,7 +34,7 @@ def add_autor():
 @app_autor.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])
 def edit_autor(id):
-    data = request.args.to_dict(flat=True)
+    data = request.form.to_dict(flat=True)
     autor = dao.get_by_id(id)
     if not autor:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)

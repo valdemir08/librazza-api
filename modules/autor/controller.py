@@ -19,6 +19,7 @@ def get_autores():
 def add_autor():
     try:
         data = request.form.to_dict(flat=True)
+        print(request.form)
         autor = Autor(nome=data.get('nome'))
         autor = dao.save(autor)
     except Exception as e:
@@ -29,7 +30,7 @@ def add_autor():
                 'error': True,
                 'message': str(e)
             }, 400)
-    return make_response({'id': autor.id}, 201)
+    return make_response({'id': autor.id, 'nome': autor.nome}, 201)
 
 @app_autor.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])

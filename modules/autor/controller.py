@@ -19,7 +19,6 @@ def get_autores():
 def add_autor():
     try:
         data = request.form.to_dict(flat=True)
-        print(request.form)
         autor = Autor(nome=data.get('nome'))
         autor = dao.save(autor)
     except Exception as e:
@@ -40,7 +39,6 @@ def edit_autor(id):
     if not autor:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)
     dao.edit(id, data)
-    autor = dao.get_by_id(id)
     return make_response(autor, 200)
 
 
@@ -56,6 +54,7 @@ def get_autor_by_id(id):
                    methods=['DELETE'])
 def delete_autor_by_id(id):
     try:
+        autor = dao.get_by_id(id)#for response body
         dao.delete_by_id(id)
     except Exception as e:
         print(e)
@@ -65,4 +64,4 @@ def delete_autor_by_id(id):
                 'error': True,
                 'message': str(e)
             }, 400)
-    return make_response({'id excluído': id}, 201)
+    return make_response(autor, 201)

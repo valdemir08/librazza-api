@@ -94,8 +94,9 @@ def get_livro_by_id(id):
 
 @app_livro.route('/{}/delete/<int:id>/'.format(app_name),
                    methods=['DELETE'])
-def delete_autor_by_id(id):
+def delete_livro_by_id(id):
     try:
+        livro = dao.get_by_id(id)
         dao.delete_by_id(id)
     except Exception as e:
         print(e)
@@ -105,4 +106,4 @@ def delete_autor_by_id(id):
                 'error': True,
                 'message': str(e)
             }, 400)
-    return make_response({'id excluído': id}, 201)
+    return make_response(livro, 201)

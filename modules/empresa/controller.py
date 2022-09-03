@@ -55,8 +55,9 @@ def get_empresa_by_id(id):
 
 @app_empresa.route('/{}/delete/<int:id>/'.format(app_name),
                    methods=['DELETE'])
-def delete_autor_by_id(id):
+def delete_empresa_by_id(id):
     try:
+        empresa = dao.get_by_id(id)
         dao.delete_by_id(id)
     except Exception as e:
         print(e)
@@ -66,6 +67,6 @@ def delete_autor_by_id(id):
                 'error': True,
                 'message': str(e)
             }, 400)
-    return make_response({'id excluído': id}, 201)
+    return make_response(empresa, 201)
 
 

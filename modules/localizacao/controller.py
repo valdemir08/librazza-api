@@ -51,3 +51,20 @@ def get_localizacao_by_id(id):
     if not localizacao:
         return make_response({'error': '{} não existe'.format(app_name)}, 404)
     return make_response(localizacao, 201)
+
+
+@app_localizacao.route('/{}/delete/<int:id>/'.format(app_name),
+                   methods=['DELETE'])
+def delete_localizacao_by_id(id):
+    try:
+        localizacao = dao.get_by_id(id)
+        dao.delete_by_id(id)
+    except Exception as e:
+        print(e)
+        print(traceback.format_exc())
+        return make_response(
+            {
+                'error': True,
+                'message': str(e)
+            }, 400)
+    return make_response(localizacao, 201)

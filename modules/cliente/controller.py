@@ -54,7 +54,15 @@ def add_cliente():
                 'error': True,
                 'message': str(e)
             }, 400)
-    return make_response({'id': cliente.id}, 201)
+    return make_response(
+        {'id': cliente.id,
+        'nome': cliente.nome,
+        'cpf' : cliente.cpf,
+        'telefone' : cliente.telefone,
+        'email' : cliente.email,
+        'data_nascimento' : cliente.data_nascimento,
+        'confiabilidade_id' : cliente.confiabilidade_id,
+        'empresa_id' : cliente.empresa_id}, 201)
 
 @app_cliente.route('/{}/<int:id>/'.format(app_name),
                    methods=['PUT'])
